@@ -4,7 +4,7 @@ function Formhandiling() {
   const [formData, setFormData] = useState({
     username: "",
     age: "",
-   
+
     joiningDate: "",
     endingDate: "",
   });
@@ -12,7 +12,6 @@ function Formhandiling() {
   const [errors, setErrors] = useState({
     username: "",
     age: "",
- 
     joiningDate: "",
     endingDate: "",
   });
@@ -36,13 +35,13 @@ function Formhandiling() {
     let formErrors = {
       username: "",
       age: "",
-   
+
       joiningDate: "",
       endingDate: "",
     };
     let isValid = true;
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
 
     const joining = formData.joiningDate ? new Date(formData.joiningDate) : null;
     const ending = formData.endingDate ? new Date(formData.endingDate) : null;
@@ -51,13 +50,18 @@ function Formhandiling() {
       formErrors.username = "Username is required";
       isValid = false;
     }
-
     if (!formData.age) {
       formErrors.age = "Age is required";
       isValid = false;
+    } else if (!/^\d+$/.test(formData.age)) {
+      formErrors.age = "Age must be a valid number";
+      isValid = false;
+    } else if (parseInt(formData.age) <= 0) {
+      formErrors.age = "Age must be a positive number";
+      isValid = false;
     }
 
-    
+
 
     if (!formData.joiningDate) {
       formErrors.joiningDate = "Joining date is required";
@@ -96,19 +100,30 @@ function Formhandiling() {
         <br /><br />
 
         <input
-          type="number"
-          name="age"
-          placeholder="Age"
-          value={formData.age}
-          onChange={handleChange}
-        />
-        <div style={{ color: 'red' }}>{errors.age}</div>
-        <br /><br />
+  type="text"
+  name="age"
+  placeholder="Age"
+  value={formData.age}
+  inputMode="numeric"
+  pattern="[0-9]*"
+  onChange={(e) => {
+    const val = e.target.value;
+    if (/^\d*$/.test(val)) {
+      handleChange(e);
+    }
+  }}
+/>
 
+
+        <div style={{ color: 'red' }}>{errors.username}</div>
+        <br /><br />
+        
+       
         <label>Joining Date:</label><br />
         <input
           type="date"
           name="joiningDate"
+          min={new Date().toISOString().split("T")[0]}
           value={formData.joiningDate}
           onChange={handleChange}
         />
@@ -119,6 +134,7 @@ function Formhandiling() {
         <input
           type="date"
           name="endingDate"
+           min={formData.joiningDate || new Date().toISOString().split("T")[0]}
           value={formData.endingDate}
           onChange={handleChange}
         />
