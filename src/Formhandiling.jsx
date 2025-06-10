@@ -100,25 +100,25 @@ function Formhandiling() {
         <br /><br />
 
         <input
-  type="text"
-  name="age"
-  placeholder="Age"
-  value={formData.age}
-  inputMode="numeric"
-  pattern="[0-9]*"
-  onChange={(e) => {
-    const val = e.target.value;
-    if (/^\d*$/.test(val)) {
-      handleChange(e);
-    }
-  }}
-/>
+          type="text"
+          name="age"
+          placeholder="Age"
+          value={formData.age}
+          inputMode="numeric"
+          pattern="[0-9]*"
+          onChange={(e) => {
+            const val = e.target.value;
+            if (/^\d*$/.test(val)) {
+              handleChange(e);
+            }
+          }}
+        />
 
 
         <div style={{ color: 'red' }}>{errors.username}</div>
         <br /><br />
-        
-       
+
+
         <label>Joining Date:</label><br />
         <input
           type="date"
@@ -134,7 +134,7 @@ function Formhandiling() {
         <input
           type="date"
           name="endingDate"
-           min={formData.joiningDate || new Date().toISOString().split("T")[0]}
+          min={formData.joiningDate || new Date().toISOString().split("T")[0]}
           value={formData.endingDate}
           onChange={handleChange}
         />
